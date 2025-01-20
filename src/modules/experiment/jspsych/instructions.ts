@@ -69,18 +69,6 @@ function generateInstructionPages(): string[] {
             <p class="inst-text"><b>${i18next.t('instructionTexts', { returnObjects: true })[4]}</b></p>
         </div>`,
   );
-  /* pages.push(
-    `
-    <h3>${i18next.t('instructionTitle')}</h3>
-    <div class="inst-container">
-      <div class="inst-graphic"> 
-        <video muted autoplay loop preload="auto" src="./assets/instruction-media/vid.mp4" style="height: 45vh;">
-          <source type="video/mp4"></source>
-        </video>
-      </div>
-      <p class="inst-text">${i18next.t('instructionExample')}</p>
-    </div>`,
-  ); */
   return pages;
 }
 
@@ -140,18 +128,29 @@ const instructionQuiz: (jsPsych: JsPsych) => Timeline = (
     {
       type: jsPsychSurveyMultiChoice,
       questions: langf.quizQuestions(1),
-      preamble: `<h3>${i18next.t('quizPreamble')}</h3><br><br><button id="quiz-repeat-btn" class="jspsych-btn">${i18next.t('repeatInstructions')}</button>`,
+      preamble: `<h3>${i18next.t('quizPreamble')}</h3><br><br><button id="quiz-repeat-btn" class="jspsych-btn">${i18next.t('repeatInstructionsButton')}</button>`,
       button_label: i18next.t('estimateSubmitBtn'),
     },
     {
-      type: jsPsychSurveyMultiChoice,
-      questions: langf.quizQuestions(2),
-      preamble: `<h3>${i18next.t('quizPreamble')}</h3><br><br><button id="quiz-repeat-btn" class="jspsych-btn">${i18next.t('repeatInstructions')}</button>`,
-      button_label: i18next.t('estimateSubmitBtn'),
+      timeline: [
+        {
+          type: jsPsychSurveyMultiChoice,
+          questions: langf.quizQuestions(2),
+          preamble: `<h3>${i18next.t('quizPreamble')}</h3><br><br><button id="quiz-repeat-btn" class="jspsych-btn">${i18next.t('repeatInstructionsButton')}</button>`,
+          button_label: i18next.t('estimateSubmitBtn'),
+        },
+      ],
+      conditional_function(): boolean {
+        // Do not display the second question when 'repeat instructions' button was pressed during the first
+        return (
+          jsPsych.data.getLastTimelineData().values()[0].response.Q0 !==
+          'read-again'
+        );
+      },
     },
   ],
   on_load: (): void => {
-    // make repeat instruction button fulfill its function
+    // make repeat instruction button fulfill its function (answer is "read-again" when button is pressed)
     document
       .getElementById('quiz-repeat-btn')!
       .addEventListener('click', (): void => {
@@ -180,14 +179,34 @@ const returnPage: (jsPsych: JsPsych) => Timeline = (
     {
       type: HtmlButtonResponsePlugin,
       stimulus: `<h3><b>${i18next.t('repeatInstructions')}</b></h3>`,
-      choices: [i18next.t('repeatInstructions')],
+      choices: [i18next.t('repeatInstructionsButton')],
+      on_load: () => {
+        // Default text says that you made a mistake, text is removed when "repeat instructions" button was pressed
+        const stimulus = document.getElementById(
+          'jspsych-html-button-response-stimulus',
+        );
+        if (
+          stimulus &&
+          ((jsPsych.data.getLastTimelineData().values()[0] &&
+            jsPsych.data.getLastTimelineData().values()[0].response.Q0 ===
+              'read-again') ||
+            (jsPsych.data.getLastTimelineData().values()[1] &&
+              jsPsych.data.getLastTimelineData().values()[1].response.Q0 ===
+                'read-again'))
+        ) {
+          stimulus.style.display = 'none';
+        }
+      },
     },
   ],
   conditional_function(): boolean {
+    /* Only display the return page, which starts the repeat of the instructions, when a question was answered incorrectly 
+       or the "repeat instructions" button was pressed (also stored as incorrect answer)
+    */
     return (
-      jsPsych.data.getLastTimelineData().values()[0].response.Q0 !==
+      jsPsych.data.get().last(3).values()[1].response.Q0 !==
         langf.quizQuestions(1)[0].options[2] ||
-      jsPsych.data.getLastTimelineData().values()[1].response.Q0 !==
+      jsPsych.data.get().last(3).values()[2].response.Q0 !==
         langf.quizQuestions(2)[0].options[2]
     );
   },
@@ -213,6 +232,7 @@ export const groupInstructions: (
     returnPage(jsPsych),
   ],
   loop_function(data: DataCollection): boolean {
+    // Loop function that repeats instructions when a question was incorrect or 'repeat instructions' was selected
     return (
       data.last(3).values()[1].response.Q0 !==
         langf.quizQuestions(1)[0].options[2] ||

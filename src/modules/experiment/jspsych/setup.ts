@@ -18,15 +18,15 @@ import { connectToSerial, connectToUSB, sendTrigger } from './utils';
  * @returns {string[]} - An array of file paths to be preloaded.
  */
 export function generatePreloadStrings(): string[] {
-  const cntables: string[] = ['people', 'objects'];
+  const cntables: string[] = ['practice', 'test'];
   const pathList: string[] = [];
-
+  const nrOfImages: number[] = [3, 40];
   // Use nested loops to construct the file paths
-  cntables.forEach((cntable) => {
-    for (let num: number = 5; num < 9; num += 1) {
-      for (let id: number = 0; id < 10; id += 1) {
-        pathList.push(`./assets/num-task-imgs/${cntable}/num-${num}-${id}.png`);
-      }
+  cntables.forEach((cntable, index) => {
+    for (let id: number = 1; id < nrOfImages[index]; id += 1) {
+      pathList.push(
+        `./assets/pareidolia-imgs/${cntable}/pareidolia-${cntable}-${id < 10 ? `0${id}` : id}.jpg`,
+      );
     }
   });
   return pathList;
