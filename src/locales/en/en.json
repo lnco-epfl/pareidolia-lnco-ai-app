@@ -43,6 +43,7 @@
   ],
   "experimentStart": "The full experiment will begin immediately after clicking the button below.",
   "experimentPracticeStart": "You will first go through 3 practice trials, click the button below to start.",
+  "experimentRoundEnd": "The round has ended, please follow the experimenter's instructions before starting the next round",
   "experimentStartBtn": "Begin",
   "estimateSubmitBtn": "Continue",
   "repeatInstructions": "You answered at least one of the questions incorrectly. Please go through the instructions again",

@@ -509,6 +509,14 @@ export async function run({
         },
       ),
     );
+    if (i !== duration.numberOfRounds - 1) {
+      timeline.push(
+        createButtonPage(
+          i18next.t('experimentRoundEnd'),
+          i18next.t('experimentStartBtn'),
+        ),
+      );
+    }
   }
 
   if (nextStepSettings.linkToNextPage) {
