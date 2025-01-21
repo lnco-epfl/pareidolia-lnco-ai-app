@@ -267,9 +267,15 @@ const partofexp: (
         // eslint-disable-next-line no-param-reassign
         jsPsych.progressBar!.progress =
           Math.round(
-            (jsPsych.progressBar!.progress + 1 / (nbBlocks * nbRounds)) *
-              1000000,
-          ) / 1000000;
+            (jsPsych.progressBar!.progress + 1 / (nbBlocks * nbRounds)) * 100,
+          ) /
+            100 >
+          1
+            ? 1
+            : Math.round(
+                (jsPsych.progressBar!.progress + 1 / (nbBlocks * nbRounds)) *
+                  100,
+              ) / 100;
       },
     },
 
