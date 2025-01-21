@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Tab } from '@mui/material';
 
-import ResultsView from '../answers/ResultsView';
+import ResultsView from '../results/ResultsView';
 import SettingsView from '../settings/SettingsView';
 
 enum Tabs {

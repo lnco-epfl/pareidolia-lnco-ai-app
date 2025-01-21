@@ -203,6 +203,7 @@ export function setHardCodedSizes(imageWidth: string): void {
   style.id = 'scaling';
   style.innerHTML = `.task-img, vid {
         width: ${imageWidth}; 
+        height: ${imageWidth};
     }`;
   if (!style.parentElement) {
     document.head.appendChild(style);

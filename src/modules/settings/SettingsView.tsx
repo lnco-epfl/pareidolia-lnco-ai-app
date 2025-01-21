@@ -167,6 +167,22 @@ const SettingsView: FC = () => {
         </Stack>
         <Stack spacing={1}>
           <Typography variant="h6">
+            {t('SETTINGS.DISPLAY_WINDOW_DURATION')}
+          </Typography>
+          <TextField
+            value={configuration.displayWindow}
+            label={t('SETTINGS.DISPLAY_WINDOW_DURATION_FIELD')}
+            type="number"
+            onChange={(e) =>
+              setConfiguration({
+                ...configuration,
+                displayWindow: Number(e.target.value),
+              })
+            }
+          />
+        </Stack>
+        <Stack spacing={1}>
+          <Typography variant="h6">
             {t('SETTINGS.CONFIDENCE.QUESTION.TITLE')}
           </Typography>
           <FormControlLabel
@@ -253,8 +269,18 @@ const SettingsView: FC = () => {
           </Typography>
         </Stack>
         <TextField
-          value={duration.content}
-          onChange={(e) => setDuration({ content: Number(e.target.value) })}
+          value={duration.numberOfImages}
+          label={t('SETTINGS.NUMBEROFIMAGES')}
+          onChange={(e) =>
+            setDuration({ ...duration, numberOfImages: Number(e.target.value) })
+          }
+        />
+        <TextField
+          value={duration.numberOfRounds}
+          label={t('SETTINGS.NUMBEROFROUNDS')}
+          onChange={(e) =>
+            setDuration({ ...duration, numberOfRounds: Number(e.target.value) })
+          }
         />
       </Stack>
       <SequencingSettingsView

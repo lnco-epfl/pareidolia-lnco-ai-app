@@ -17,15 +17,15 @@
   "resizeBtn": "Continue",
   "autoResizeBtn": "Skip calibration<br><small>(will calibrate automatically)</small>",
   "instructionTitle": "Tutorial",
-  "instructionExample": "<b>Here is an example of the task. You're asked to indicate if you see a face in the image or not. Press <i>left arrow</i> to indicate \"no face\" or <i>right arrow</i> to indicate \"face\".</b>",
+  "instructionExample": "<b>Here is an example of the task. You're asked to indicate if you see a face in the image or not. Press <i style='color:red;'>A</i> to indicate <i style='color:red;'>no face</i> or <i style='color:blue;'>L</i> to indicate <i style='color:blue'>face</i>.</b>",
   "instructionBtnNext": "Next",
   "instructionBtnPrevious": "Previous",
   "instructionTexts": [
     "<b>Step 1:<br>A white cross is displayed in the middle of the screen.<br> Look at it and keep focus.</b>",
     "<b>Step 2:<br>Shortly afterwards, an image will be displayed. You will be asked to indicate if you can see a face in the image or not.</b>",
-    "<b>Step 3:<br>While the image is being displayed, press the <i>left arrow</i> to indicate that <i>no face</i> is present in the image, or press the <i>right arrow</i> to indicate that a <i>face</i> is present.</b>",
+    "<b>Step 3:<br>While the image is being displayed, press the <i style='color:red;'>A</i> to indicate that <i style='color:red;'>no face</i> is present in the image, or press the <i style='color:blue;'>L</i> to indicate that a <i style='color:blue;'>face</i> is present.</b>",
     "<b>These three steps will be repeated several times throughout the experiment.</b>",
-    "<b>REMINDER: press the <i>left arrow</i> to indicate that <i>no face</i> is present in the image, or press the <i>right arrow</i> to indicate that a <i>face</i> is present.</b>"
+    "<b>REMINDER: press the <i style='color:red;'>A</i> key to indicate that <i style='color:red;'>no face</i> is present in the image, or press the <i style='color:blue;'>L</i> key to indicate that a <i style='color:blue;'>face</i> is present.</b>"
   ],
   "instructionScreenExample": "Did you see a face in the image",
   "quizPreamble": "Test your knowledge before you begin!",
@@ -33,15 +33,16 @@
   "quizQuestionOptionsOne": [
     "Wait for the image to disappear and complete the form with a question",
     "Type the names of the objects I can identify in the image",
-    "Press the left or right arrow key to indicate if I see a face in the image"
+    "Press the 'A' key or 'L' key to indicate if I see a face in the image"
   ],
   "quizQuestionPromptTwo": "Question 2: Which key should I press to indicate that I see a face in the image?",
   "quizQuestionOptionsTwo": [
     "No keys, after the image disappears a form will be displayed",
-    "Left Arrow",
-    "Right Arrow"
+    "A",
+    "L"
   ],
-  "experimentStart": "The experiment will begin immediately after clicking the button below.",
+  "experimentStart": "The full experiment will begin immediately after clicking the button below.",
+  "experimentPracticeStart": "You will first go through 3 practice trials, click the button below to start.",
   "experimentStartBtn": "Begin",
   "estimateSubmitBtn": "Continue",
   "repeatInstructions": "You answered at least one of the questions incorrectly. Please go through the instructions again",
@@ -69,8 +70,13 @@
   "ANSWERS.TITLE": "Answers",
   "SETTINGS.BLOCKS.TITLE": "Number of blocks per condition",
   "SETTINGS.BLOCKS.DESCRIPTION": "There are a total of 3 images available for the 'practice' condition and of 40 images for the 'test' condition, indicate how many you want to display.",
+  "SETTINGS.BLOCKS.EXAMPLE": "So when selecting 10 images (of the total 40) across 3 rounds, 30 images will be displayed total, randomly sampled from the 40 images every round (so with possible overlap).",
+  "SETTINGS.NUMBEROFIMAGES": "Number of images per round",
+  "SETTINGS.NUMBEROFROUNDS": "Number of rounds",
   "SETTINGS.CONFIDENCE.QUESTION.TITLE": "Add a confidence estimation question after each trial",
   "SETTINGS.CONTINUE.BUTTON.DELAY.TITLE": "Continue Button Delay",
+  "SETTINGS.DISPLAY_WINDOW_DURATION": "Image display time",
+  "SETTINGS.DISPLAY_WINDOW_DURATION_FIELD": "Stimulus display window (in seconds)",
   "SETTINGS.EXPERIMENT.CONFIG": "Experiment Configuration",
   "SETTINGS.SKIP.SCREEN.CALIBRATION": "Skip the screen calibration steps",
   "SETTINGS.SKIP.DEVICE": "Skip the step for connecting an external device (e.g. EEG trigger)",
@@ -78,7 +84,7 @@
   "SETTINGS.SEQUENCING": "Sequencing",
   "SETTINGS.SEQUENCING.SUBTITLE": "Configure the experiment",
   "SETTINGS.SEQUENCING.SKIPINSTRUCTIONS": "Skip the initial instructions",
-  "SETTINGS.SEQUENCING.CONDITION": "Which dataset do you want to use",
+  "SETTINGS.SEQUENCING.SKIPPRACTICETRIALS": "Skip practice trials",
   "SETTINGS.PHOTODIODE_LABEL": "Will you use a photodiode?",
   "SETTINGS.HARD.IMAGE.SIZE.DESCRIPTION": "Set a fixed size for numerosity image (end with px or %)",
   "SETTINGS.HARD.IMAGE.SIZE.FIELD": "Fixed Image Size",

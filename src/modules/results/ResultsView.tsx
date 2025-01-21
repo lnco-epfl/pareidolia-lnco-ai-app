@@ -90,7 +90,12 @@ const ResultsView: FC = () => {
                 <ResultsRow
                   key={data.id}
                   name={data.creator?.name}
-                  duration={data.data.settings?.duration.content}
+                  duration={
+                    data.data.settings
+                      ? data.data.settings.duration.numberOfImages *
+                        data.data.settings.duration.numberOfRounds
+                      : 0
+                  }
                   length={rawData ? rawData.count() : 0}
                   rawDataDownload={() =>
                     downloadJson(

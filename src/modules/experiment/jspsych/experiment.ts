@@ -20,6 +20,7 @@ import { ExperimentResult } from '@/modules/config/appResults';
 import { AllSettingsType } from '@/modules/context/SettingsContext';
 
 import { groupInstructions, tipScreen } from './instructions';
+import { practiceTrials } from './practice';
 // Import styles
 import { showEndScreen } from './quit';
 import {
@@ -33,7 +34,7 @@ import {
 import { createButtonPage } from './utils';
 
 // Type aliases for better code readability
-type ImageDescription = { num: number; blackscreenJitter: number };
+export type ImageDescription = { num: number; blackscreenJitter: number };
 export type Timeline = JsPsych['timeline'];
 export type DeviceType = {
   device: SerialPort | USBDevice | null;
@@ -183,10 +184,11 @@ const addFontSizeMenu = (
  */
 const partofexp: (
   jsPsych: JsPsych,
-  condition: 'practice' | 'test',
   nbImages: number,
+  nbRounds: number,
   usePhotoDiode: 'top-left' | 'top-right' | 'off',
   confidenceQuestion: boolean,
+  displayWindow: number,
   deviceInfo: {
     device: SerialPort | USBDevice | null;
     sendTriggerFunction: (
@@ -197,10 +199,11 @@ const partofexp: (
   blockCompleted: () => void,
 ) => Timeline = (
   jsPsych: JsPsych,
-  condition: 'practice' | 'test',
   nbBlocks: number,
+  nbRounds: number,
   usePhotoDiode: 'top-left' | 'top-right' | 'off',
   confidenceQuestion: boolean,
+  displayWindow: number,
   deviceInfo: {
     device: SerialPort | USBDevice | null;
     sendTriggerFunction: (
@@ -243,23 +246,30 @@ const partofexp: (
       type: jsPsychHtmlKeyboardResponse,
       stimulus() {
         const html = `<div>
-          <img class="task-img" style="margin: 0 auto;" src='./assets/pareidolia-imgs/${condition}/pareidolia-${condition}-${jsPsych.evaluateTimelineVariable('num') > 9 ? jsPsych.evaluateTimelineVariable('num') : `0${jsPsych.evaluateTimelineVariable('num')}`}.jpg' alt='task image'/>
-          <div><br>Press the <b>Right Arrow</b> on your keyboard if you see a face in the image <svg class='right-arrow' style='width: 48px; height: 48px;'xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M10.146 4.646a.5.5 0 0 1 .708 0l2.646 2.647-2.646 2.646a.5.5 0 0 1-.708-.707L11.293 8H2a.5.5 0 0 1 0-1h9.293L10.146 5.354a.5.5 0 0 1 0-.708z'/></svg><br>or<br><svg class='left-arrow' style='width: 48px; height: 48px;' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M5.854 4.646a.5.5 0 0 0-.708 0L2.5 7.293l2.646 2.647a.5.5 0 0 0 .708-.707L4.707 8H14a.5.5 0 0 0 0-1H4.707l1.147-1.146a.5.5 0 0 0 0-.708z'/></svg>Press the <b>Left Arrow</b> if you do not see any faces.</div>
+          <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/test/pareidolia-test-${jsPsych.evaluateTimelineVariable('num') > 9 ? jsPsych.evaluateTimelineVariable('num') : `0${jsPsych.evaluateTimelineVariable('num')}`}.jpg' alt='task image'/></div>
+          <div><br>Press the <b style='color:blue;'>L</b> key on your keyboard if you see a <b style='color:blue;'>face</b> in the image <svg class='right-arrow' style='width: 48px; height: 48px; fill: blue;'xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M10.146 4.646a.5.5 0 0 1 .708 0l2.646 2.647-2.646 2.646a.5.5 0 0 1-.708-.707L11.293 8H2a.5.5 0 0 1 0-1h9.293L10.146 5.354a.5.5 0 0 1 0-.708z'/></svg><br>or<br><svg class='left-arrow' style='width: 48px; height: 48px; fill: red;' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M5.854 4.646a.5.5 0 0 0-.708 0L2.5 7.293l2.646 2.647a.5.5 0 0 0 .708-.707L4.707 8H14a.5.5 0 0 0 0-1H4.707l1.147-1.146a.5.5 0 0 0 0-.708z'/></svg>Press the <b style='color:red;'>A</b> key if you see <b style='color:red;'>no faces</b>.</div>
           <div class='photo-diode photo-diode-white ${usePhotoDiode === 'top-left' ? 'top-left' : 'top-right'} ${usePhotoDiode === 'off' ? 'photo-diode-hide' : ''}'/>
         </div>`;
         return html;
       },
-      choices: ['arrowright', 'arrowleft'],
-      trial_duration: 30000,
-      on_start: (): void => {
+      choices: ['a', 'l'],
+      on_load: (): void => {
         deviceInfo.sendTriggerFunction(deviceInfo.device, '2');
         document.body.style.cursor = 'none';
+        const image = document.getElementById('task-img');
+        setTimeout(() => {
+          if (image) {
+            image.style.display = 'none';
+          }
+        }, displayWindow * 1000);
       },
       on_finish(): void {
         // eslint-disable-next-line no-param-reassign
         jsPsych.progressBar!.progress =
-          Math.round((jsPsych.progressBar!.progress + 1 / nbBlocks) * 1000000) /
-          1000000;
+          Math.round(
+            (jsPsych.progressBar!.progress + 1 / (nbBlocks * nbRounds)) *
+              1000000,
+          ) / 1000000;
       },
     },
 
@@ -358,7 +368,6 @@ export async function run({
     photoDiodeSettings,
     nextStepSettings,
   } = input.settings;
-  const blocksPerHalf: number = duration.content || 5;
   const connectType: 'Serial Port' | 'USB' | null = 'Serial Port';
 
   i18next.changeLanguage(language.language);
@@ -462,21 +471,45 @@ export async function run({
 
   timeline.push(
     createButtonPage(
+      i18next.t('experimentPracticeStart'),
+      i18next.t('experimentStartBtn'),
+    ),
+  );
+
+  timeline.push(
+    practiceTrials(
+      jsPsych,
+      configuration.usePhotoDiode,
+      configuration.addConfidenceQuestion,
+      configuration.displayWindow,
+      deviceInfo,
+    ),
+  );
+
+  timeline.push(
+    createButtonPage(
       i18next.t('experimentStart'),
       i18next.t('experimentStartBtn'),
     ),
-    partofexp(
-      jsPsych,
-      sequencing.condition,
-      blocksPerHalf,
-      configuration.usePhotoDiode,
-      configuration.addConfidenceQuestion,
-      deviceInfo,
-      () => {
-        onFinish(jsPsych.data.get(), input.settings, true);
-      },
-    ),
   );
+  for (let i = 0; i < duration.numberOfRounds; i += 1) {
+    timeline.push(
+      partofexp(
+        jsPsych,
+        duration.numberOfImages,
+        duration.numberOfRounds,
+        configuration.usePhotoDiode,
+        configuration.addConfidenceQuestion,
+        configuration.displayWindow,
+        deviceInfo,
+        () => {
+          if (i === duration.numberOfRounds - 1) {
+            onFinish(jsPsych.data.get(), input.settings, true);
+          }
+        },
+      ),
+    );
+  }
 
   if (nextStepSettings.linkToNextPage) {
     timeline.push({

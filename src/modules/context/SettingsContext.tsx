@@ -32,15 +32,17 @@ const defaultSettingsValues: AllSettingsType = {
     hardImageSize: '',
     usePhotoDiode: 'off',
     addConfidenceQuestion: false,
+    displayWindow: 30,
     continueButtonDelay: 0,
     fontSize: 'normal',
   },
   duration: {
-    content: 4,
+    numberOfImages: 10,
+    numberOfRounds: 1,
   },
   sequencing: {
     skipInstructions: false,
-    condition: 'test',
+    skipPractice: false,
   },
   language: {
     language: AllowedLanguages.English,

@@ -1,10 +1,11 @@
 export type SequencingSettings = {
   skipInstructions: boolean;
-  condition: 'practice' | 'test';
+  skipPractice: boolean;
 };
 
 export type DurationSettings = {
-  content: number;
+  numberOfImages: number;
+  numberOfRounds: number;
 };
 
 export type PhotoDiodeSettings = {
@@ -23,6 +24,7 @@ export type ConfigurationSettings = {
   hardImageSize: string;
   usePhotoDiode: 'top-left' | 'top-right' | 'off';
   addConfidenceQuestion: boolean;
+  displayWindow: number;
   continueButtonDelay: number;
   fontSize: 'small' | 'normal' | 'large' | 'extra-large';
 };

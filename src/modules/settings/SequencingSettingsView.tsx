@@ -1,13 +1,7 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Switch,
-  Typography,
-} from '@mui/material';
+import { FormControlLabel, Switch, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
 import { SequencingSettings } from '@/modules/config/appSettings';
@@ -22,9 +16,9 @@ const SequencingSettingsView: FC<SequencingSettingsViewProps> = ({
   onChange,
 }) => {
   const { t } = useTranslation();
-  const { skipInstructions, condition } = sequencingSettings || {
+  const { skipInstructions, skipPractice } = sequencingSettings || {
     skipInstructions: false,
-    condition: 'test',
+    skipPractice: false,
   };
   return (
     <Stack spacing={1}>
@@ -43,35 +37,17 @@ const SequencingSettingsView: FC<SequencingSettingsViewProps> = ({
         }}
         checked={skipInstructions}
       />
-      <Stack>
-        <Typography variant="h6">
-          {t('SETTINGS.SEQUENCING.CONDITION')}
-        </Typography>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="test"
-          name="radio-buttons-group"
-          row
-          value={condition}
-          onChange={(e) =>
-            onChange({
-              ...sequencingSettings,
-              condition: e.target.value as SequencingSettings['condition'],
-            })
-          }
-        >
-          <FormControlLabel
-            value="practice"
-            control={<Radio />}
-            label="Practice (3 images)"
-          />
-          <FormControlLabel
-            value="test"
-            control={<Radio />}
-            label="Test (40 images)"
-          />
-        </RadioGroup>
-      </Stack>
+      <FormControlLabel
+        control={<Switch />}
+        label={t('SETTINGS.SEQUENCING.SKIPPRACTICETRIALS')}
+        onChange={(e, checked) => {
+          onChange({
+            ...sequencingSettings,
+            skipPractice: checked,
+          });
+        }}
+        checked={skipPractice}
+      />
     </Stack>
   );
 };
