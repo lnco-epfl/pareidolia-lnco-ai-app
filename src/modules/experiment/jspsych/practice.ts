@@ -110,7 +110,7 @@ export const practiceTrials: (
       stimulus() {
         const html = `<div>
             <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/practice/pareidolia-practice-${jsPsych.evaluateTimelineVariable('num') > 9 ? jsPsych.evaluateTimelineVariable('num') : `0${jsPsych.evaluateTimelineVariable('num')}`}.jpg' alt='task image'/></div>
-            <div><br>Press the <b style='color:blue;'>L</b> key on your keyboard if you see a <b style='color:blue;'>face</b> in the image <svg class='right-arrow' style='width: 48px; height: 48px; fill: blue;'xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M10.146 4.646a.5.5 0 0 1 .708 0l2.646 2.647-2.646 2.646a.5.5 0 0 1-.708-.707L11.293 8H2a.5.5 0 0 1 0-1h9.293L10.146 5.354a.5.5 0 0 1 0-.708z'/></svg><br>or<br><svg class='left-arrow' style='width: 48px; height: 48px; fill: red;' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M5.854 4.646a.5.5 0 0 0-.708 0L2.5 7.293l2.646 2.647a.5.5 0 0 0 .708-.707L4.707 8H14a.5.5 0 0 0 0-1H4.707l1.147-1.146a.5.5 0 0 0 0-.708z'/></svg>Press the <b style='color:red;'>A</b> key if you see <b style='color:red;'>no faces</b>.</div>
+            <div class="task-text"><b>A: No Face</b><br /><b>L: Face</b></div>
             <div class='photo-diode photo-diode-white ${usePhotoDiode === 'top-left' ? 'top-left' : 'top-right'} ${usePhotoDiode === 'off' ? 'photo-diode-hide' : ''}'/>
           </div>`;
         return html;

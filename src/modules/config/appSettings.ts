@@ -45,3 +45,5 @@ export type NextStepSettings = {
   link: string;
   linkText: string;
 };
+
+export const defaultImageSize = 580;

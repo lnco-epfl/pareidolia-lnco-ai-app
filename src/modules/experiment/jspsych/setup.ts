@@ -5,6 +5,8 @@ import jsPsychSurveyHtmlForm from '@jspsych/plugin-survey-html-form';
 import i18next from 'i18next';
 import { DataCollection, JsPsych } from 'jspsych';
 
+import { defaultImageSize } from '@/modules/config/appSettings';
+
 // eslint-disable-next-line prettier/prettier
 import { type ConnectType, type DeviceType, type Timeline } from './experiment';
 // eslint-disable-next-line prettier/prettier
@@ -177,7 +179,7 @@ export function setSizes(
 ): void {
   const style: HTMLElement =
     document.getElementById('scaling') || document.createElement('style');
-  const widthPixels: number = scalingFactor * 700;
+  const widthPixels: number = scalingFactor * defaultImageSize;
   style.id = 'scaling';
   style.innerHTML = `.task-img, vid {
         width: ${widthPixels}px; 

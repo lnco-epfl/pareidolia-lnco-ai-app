@@ -28,6 +28,7 @@ import {
   NextStepSettings,
   PhotoDiodeSettings,
   SequencingSettings,
+  defaultImageSize,
 } from '../config/appSettings';
 import { useSettings } from '../context/SettingsContext';
 import NextStepSettingsView from './NextStepSettings';
@@ -335,7 +336,7 @@ const SettingsView: FC = () => {
                 onFinish: (data: DataCollection) => {
                   setConfiguration({
                     ...configuration,
-                    hardImageSize: `${(10 / data.values()[0].response.input) * 700}px`,
+                    hardImageSize: `${(10 / data.values()[0].response.input) * defaultImageSize}px`,
                   });
                   setCalibrationModalOpen(false);
                 },
