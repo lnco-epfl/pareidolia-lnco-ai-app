@@ -2,6 +2,8 @@ import jsPsychHtmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response'
 import SurveyLikertPlugin from '@jspsych/plugin-survey-likert';
 import { JsPsych } from 'jspsych';
 
+import { KeySettings } from '@/modules/config/appSettings';
+
 import { type ImageDescription, type Timeline } from './experiment';
 
 /**
@@ -56,6 +58,7 @@ export const practiceTrials: (
   usePhotoDiode: 'top-left' | 'top-right' | 'off',
   confidenceQuestion: boolean,
   displayWindow: number,
+  keySettings: KeySettings,
   deviceInfo: {
     device: SerialPort | USBDevice | null;
     sendTriggerFunction: (
@@ -68,6 +71,7 @@ export const practiceTrials: (
   usePhotoDiode: 'top-left' | 'top-right' | 'off',
   confidenceQuestion: boolean,
   displayWindow: number,
+  keySettings: KeySettings,
   deviceInfo: {
     device: SerialPort | USBDevice | null;
     sendTriggerFunction: (
@@ -110,12 +114,12 @@ export const practiceTrials: (
       stimulus() {
         const html = `<div>
             <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/practice/pareidolia-practice-${jsPsych.evaluateTimelineVariable('num') > 9 ? jsPsych.evaluateTimelineVariable('num') : `0${jsPsych.evaluateTimelineVariable('num')}`}.jpg' alt='task image'/></div>
-            <div class="task-text"><b>A: No Face</b><br /><b>L: Face</b></div>
+            <div class="task-text"><b>${keySettings.noFaceKey.toUpperCase()}: No Face</b><b>${keySettings.faceKey.toUpperCase()}: Face</b></div>
             <div class='photo-diode photo-diode-white ${usePhotoDiode === 'top-left' ? 'top-left' : 'top-right'} ${usePhotoDiode === 'off' ? 'photo-diode-hide' : ''}'/>
           </div>`;
         return html;
       },
-      choices: ['a', 'l'],
+      choices: [keySettings.noFaceKey, keySettings.faceKey],
       on_load: (): void => {
         deviceInfo.sendTriggerFunction(deviceInfo.device, '2');
         document.body.style.cursor = 'none';

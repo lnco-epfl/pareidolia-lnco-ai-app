@@ -4,6 +4,8 @@ import jsPsychSurveyMultiChoice from '@jspsych/plugin-survey-multi-choice';
 import i18next from 'i18next';
 import { DataCollection, JsPsych } from 'jspsych';
 
+import { KeySettings } from '@/modules/config/appSettings.js';
+
 // Import styles and language functions
 import { type Timeline } from './experiment.js';
 import * as langf from './languages.js';
@@ -16,7 +18,7 @@ import { activateMQCunderline } from './utils.js';
  * @param { 'people' | 'objects' } cntable - The type of countable (people or objects)
  * @returns { string[] } - Array of instruction pages as HTML strings
  */
-function generateInstructionPages(): string[] {
+function generateInstructionPages(keySettings: KeySettings): string[] {
   const instructionImages: string[] = [
     `
     <img class="inst-monitor" src="./assets/instruction-media/monitor-crosshair.png" alt="computer monitor pictogram">`,
@@ -37,7 +39,7 @@ function generateInstructionPages(): string[] {
         <div class="inst-graphic">
           ${instructionImages[pageNumber]}
         </div>
-          <p class="inst-text"><b>${i18next.t('instructionTexts', { returnObjects: true })[pageNumber]}</b></p>
+          <p class="inst-text"><b>${i18next.t('instructionTexts', { returnObjects: true, facekey: keySettings.faceKey.toUpperCase(), nofacekey: keySettings.noFaceKey.toUpperCase() })[pageNumber]}</b></p>
       </div>`,
     );
   }
@@ -56,7 +58,7 @@ function generateInstructionPages(): string[] {
           ${instructionImages[2]}
         </div>
       </div>
-      <p class="inst-text"><b>${i18next.t('instructionTexts', { returnObjects: true })[3]}</b></p>
+      <p class="inst-text"><b>${i18next.t('instructionTexts', { returnObjects: true, facekey: keySettings.faceKey.toUpperCase(), nofacekey: keySettings.noFaceKey.toUpperCase() })[3]}</b></p>
     </div>`,
   );
   pages.push(
@@ -66,7 +68,7 @@ function generateInstructionPages(): string[] {
           <div class="inst-graphic">
             ${instructionImages[2]}
           </div>
-            <p class="inst-text"><b>${i18next.t('instructionTexts', { returnObjects: true })[4]}</b></p>
+            <p class="inst-text"><b>${i18next.t('instructionTexts', { returnObjects: true, facekey: keySettings.faceKey.toUpperCase(), nofacekey: keySettings.noFaceKey.toUpperCase() })[4]}</b></p>
         </div>`,
   );
   return pages;
@@ -79,12 +81,15 @@ function generateInstructionPages(): string[] {
  * @param { 'people' | 'objects' } cntable - The type of countable (people or objects)
  * @returns { Timeline } - Timeline for instructions
  */
-function instructions(continueButtonDelay: number): Timeline {
+function instructions(
+  continueButtonDelay: number,
+  keySettings: KeySettings,
+): Timeline {
   return {
     timeline: [
       {
         type: jsPsychinstructions,
-        pages: generateInstructionPages(),
+        pages: generateInstructionPages(keySettings),
         button_label_next: i18next.t('instructionBtnNext'),
         button_label_previous: i18next.t('instructionBtnPrevious'),
         show_clickable_nav: true,
@@ -121,13 +126,14 @@ function instructions(continueButtonDelay: number): Timeline {
  * @param { 'people' | 'objects' } cntable - The type of countable (people or objects)
  * @returns { timeline } - Timeline for instruction quiz
  */
-const instructionQuiz: (jsPsych: JsPsych) => Timeline = (
+const instructionQuiz: (
   jsPsych: JsPsych,
-): Timeline => ({
+  keySettings: KeySettings,
+) => Timeline = (jsPsych: JsPsych, keySettings: KeySettings): Timeline => ({
   timeline: [
     {
       type: jsPsychSurveyMultiChoice,
-      questions: langf.quizQuestions(1),
+      questions: langf.quizQuestions(1, keySettings),
       preamble: `<h3>${i18next.t('quizPreamble')}</h3><br><br><button id="quiz-repeat-btn" class="jspsych-btn">${i18next.t('repeatInstructionsButton')}</button>`,
       button_label: i18next.t('estimateSubmitBtn'),
     },
@@ -135,7 +141,7 @@ const instructionQuiz: (jsPsych: JsPsych) => Timeline = (
       timeline: [
         {
           type: jsPsychSurveyMultiChoice,
-          questions: langf.quizQuestions(2),
+          questions: langf.quizQuestions(2, keySettings),
           preamble: `<h3>${i18next.t('quizPreamble')}</h3><br><br><button id="quiz-repeat-btn" class="jspsych-btn">${i18next.t('repeatInstructionsButton')}</button>`,
           button_label: i18next.t('estimateSubmitBtn'),
         },
@@ -172,8 +178,9 @@ const instructionQuiz: (jsPsych: JsPsych) => Timeline = (
  * @param {'people' | 'objects'} cntable - The type of countable (people or objects).
  * @returns {timeline} - An object representing the timeline for the return page.
  */
-const returnPage: (jsPsych: JsPsych) => Timeline = (
+const returnPage: (jsPsych: JsPsych, keySettings: KeySettings) => Timeline = (
   jsPsych: JsPsych,
+  keySettings: KeySettings,
 ): Timeline => ({
   timeline: [
     {
@@ -205,9 +212,9 @@ const returnPage: (jsPsych: JsPsych) => Timeline = (
     */
     return (
       jsPsych.data.get().last(3).values()[1].response.Q0 !==
-        langf.quizQuestions(1)[0].options[2] ||
+        langf.quizQuestions(1, keySettings)[0].options[2] ||
       jsPsych.data.get().last(3).values()[2].response.Q0 !==
-        langf.quizQuestions(2)[0].options[2]
+        langf.quizQuestions(2, keySettings)[0].options[2]
     );
   },
 });
@@ -224,20 +231,24 @@ const returnPage: (jsPsych: JsPsych) => Timeline = (
 export const groupInstructions: (
   jsPsych: JsPsych,
   continueButtonDelay: number,
-  secondHalf?: boolean,
-) => Timeline = (jsPsych: JsPsych, continueButtonDelay: number): Timeline => ({
+  keySettings: KeySettings,
+) => Timeline = (
+  jsPsych: JsPsych,
+  continueButtonDelay: number,
+  keySettings: KeySettings,
+): Timeline => ({
   timeline: [
-    instructions(continueButtonDelay),
-    instructionQuiz(jsPsych),
-    returnPage(jsPsych),
+    instructions(continueButtonDelay, keySettings),
+    instructionQuiz(jsPsych, keySettings),
+    returnPage(jsPsych, keySettings),
   ],
   loop_function(data: DataCollection): boolean {
     // Loop function that repeats instructions when a question was incorrect or 'repeat instructions' was selected
     return (
       data.last(3).values()[1].response.Q0 !==
-        langf.quizQuestions(1)[0].options[2] ||
+        langf.quizQuestions(1, keySettings)[0].options[2] ||
       data.last(3).values()[2].response.Q0 !==
-        langf.quizQuestions(2)[0].options[2]
+        langf.quizQuestions(2, keySettings)[0].options[2]
     );
   },
   on_finish: (): void => {

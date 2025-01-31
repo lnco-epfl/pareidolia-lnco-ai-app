@@ -6,6 +6,7 @@ import {
   AllowedLanguages,
   ConfigurationSettings,
   DurationSettings,
+  KeySettings,
   LanguageSettings,
   NextStepSettings,
   PhotoDiodeSettings,
@@ -20,6 +21,7 @@ export type AllSettingsType = {
   sequencing: SequencingSettings;
   language: LanguageSettings;
   photoDiodeSettings: PhotoDiodeSettings;
+  keySettings: KeySettings;
   nextStepSettings: NextStepSettings;
 };
 
@@ -50,6 +52,10 @@ const defaultSettingsValues: AllSettingsType = {
   photoDiodeSettings: {
     usePhotoDiode: 'off',
   },
+  keySettings: {
+    faceKey: 'L',
+    noFaceKey: 'A',
+  },
   nextStepSettings: {
     title: '',
     description: '',
@@ -66,6 +72,7 @@ const ALL_SETTING_NAMES = [
   'sequencing',
   'language',
   'photoDiodeSettings',
+  'keySettings',
   'nextStepSettings',
 ] as const;
 

@@ -17,15 +17,15 @@
   "resizeBtn": "Continue",
   "autoResizeBtn": "Skip calibration<br><small>(will calibrate automatically)</small>",
   "instructionTitle": "Tutorial",
-  "instructionExample": "<b>Here is an example of the task. You're asked to indicate if you see a face in the image or not. Press <i>A</i> to indicate <i>no face</i> or <i>L</i> to indicate <i>face</i>.</b>",
+  "instructionExample": "<b>Here is an example of the task. You're asked to indicate if you see a face in the image or not. Press <i>{{nofacekey}}</i> to indicate <i>no face</i> or <i>{{facekey}}</i> to indicate <i>face</i>.</b>",
   "instructionBtnNext": "Next",
   "instructionBtnPrevious": "Previous",
   "instructionTexts": [
     "<b>Step 1:</b><br>A white cross is displayed in the middle of the screen.<br> Look at it and keep focus.",
     "<b>Step 2:</b><br>Shortly afterwards, an image will be displayed. You will be asked to indicate if you can see a face in the image or not.",
-    "<b>Step 3:</b><br>While the image is being displayed, press the <i>A</i> to indicate that <i>no face</i> is present in the image,<br/> or press the <i>L</i> to indicate that a <i>face</i> is present.",
+    "<b>Step 3:</b><br>While the image is being displayed, press the <i>{{nofacekey}}</i> to indicate that <i>no face</i> is present in the image,<br/> or press the <i>{{facekey}}</i> to indicate that a <i>face</i> is present.",
     "<b>These three steps will be repeated several times throughout the experiment.</b>",
-    "<b>REMINDER</b> press the <i>A</i> key to indicate that <i>no face</i> is present in the image, or press the <i>L</i> key to indicate that a <b>face</b> is present."
+    "<b>REMINDER</b> press the <i>{{nofacekey}}</i> key to indicate that <i>no face</i> is present in the image, or press the <i>{{facekey}}</i> key to indicate that a <b>face</b> is present."
   ],
   "instructionScreenExample": "Did you see a face in the image",
   "quizPreamble": "Test your knowledge before you begin!",
@@ -33,13 +33,13 @@
   "quizQuestionOptionsOne": [
     "Wait for the image to disappear and complete the form with a question",
     "Type the names of the objects I can identify in the image",
-    "Press the 'A' key or 'L' key to indicate if I see a face in the image"
+    "Press the '{{nofacekey}}' key or '{{facekey}}' key to indicate if I see a face in the image"
   ],
   "quizQuestionPromptTwo": "Question 2: Which key should I press to indicate that I see a face in the image?",
   "quizQuestionOptionsTwo": [
     "No keys, after the image disappears a form will be displayed",
-    "A",
-    "L"
+    "{{nofacekey}}",
+    "{{facekey}}"
   ],
   "experimentStart": "The full experiment will begin immediately after clicking the button below.",
   "experimentPracticeStart": "You will first go through 3 practice trials, click the button below to start.",
@@ -91,6 +91,10 @@
   "SETTINGS.HARD.IMAGE.SIZE.FIELD": "Fixed Image Size",
   "SETTINGS.CONFIDENCE.QUESTION": "Confidence question",
   "SETTINGS.CONTINUE_BUTTON_DELAY": "Delay before enabling continue button (in seconds)",
+  "SETTINGS.KEY.SETTINGS.TITLE": "Set Keys for the Task",
+  "SETTINGS.FACE.KEY": "Key for 'Face'",
+  "SETTINGS.NOFACE.KEY": "Key for 'No Face'",
+  "SETTINGS.CHANGE.KEY": "Change key",
   "SETTINGS.NEXT_STEP.LABEL_NEXT_STEP": "Add a custom end page",
   "SETTINGS.NEXT_STEP.LINK_PAGE_LABEL": "Custom End Page Settings",
   "SETTINGS.NEXT_STEP.TITLE_LABEL": "Title",

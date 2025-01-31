@@ -24,6 +24,7 @@ import {
   AllowedLanguages,
   ConfigurationSettings,
   DurationSettings,
+  KeySettings,
   LanguageSettings,
   NextStepSettings,
   PhotoDiodeSettings,
@@ -31,6 +32,7 @@ import {
   defaultImageSize,
 } from '../config/appSettings';
 import { useSettings } from '../context/SettingsContext';
+import KeySettingsView from './KeySettingsView';
 import NextStepSettingsView from './NextStepSettings';
 import PhotoDiodeSettingsView from './PhotoDiodeSettingsView';
 import SequencingSettingsView from './SequencingSettingsView';
@@ -44,6 +46,7 @@ const SettingsView: FC = () => {
     duration: durationSavedState,
     language: languageSavedState,
     photoDiodeSettings: photoDiodeSettingsSavedState,
+    keySettings: keySettingsSavedState,
     nextStepSettings: nextStepSettingsSavedState,
     saveSettings,
   } = useSettings();
@@ -57,6 +60,9 @@ const SettingsView: FC = () => {
     useState<DurationSettings>(durationSavedState);
   const [language, setLangauge] =
     useState<LanguageSettings>(languageSavedState);
+  const [keySettings, setKeySettings] = useState<KeySettings>(
+    keySettingsSavedState,
+  );
   const [nextStepSettings, setNextStepSettings] = useState<NextStepSettings>(
     nextStepSettingsSavedState,
   );
@@ -72,6 +78,7 @@ const SettingsView: FC = () => {
     saveSettings('duration', duration);
     saveSettings('language', language);
     saveSettings('photoDiodeSettings', photoDiodeSettings);
+    saveSettings('keySettings', keySettings);
     saveSettings('nextStepSettings', nextStepSettings);
   };
 
@@ -88,6 +95,7 @@ const SettingsView: FC = () => {
       isEqual(durationSavedState, duration) &&
       isEqual(languageSavedState, language) &&
       isEqual(photoDiodeSettingsSavedState, photoDiodeSettings) &&
+      isEqual(keySettingsSavedState, keySettings) &&
       isEqual(nextStepSettingsSavedState, nextStepSettings)
     ) {
       return true;
@@ -104,6 +112,8 @@ const SettingsView: FC = () => {
     languageSavedState,
     photoDiodeSettings,
     photoDiodeSettingsSavedState,
+    keySettings,
+    keySettingsSavedState,
     nextStepSettings,
     nextStepSettingsSavedState,
   ]);
@@ -307,6 +317,10 @@ const SettingsView: FC = () => {
           <FormControlLabel value="fr" control={<Radio />} label="French" />
         </RadioGroup>
       </Stack>
+      <KeySettingsView
+        keySettings={keySettings}
+        onChange={(newSetting: KeySettings) => setKeySettings(newSetting)}
+      />
       <NextStepSettingsView
         nextStepSettings={nextStepSettings}
         onChange={(newSetting: NextStepSettings) =>
@@ -332,6 +346,7 @@ const SettingsView: FC = () => {
                   nextStepSettings,
                   photoDiodeSettings,
                   sequencing,
+                  keySettings,
                 },
                 onFinish: (data: DataCollection) => {
                   setConfiguration({

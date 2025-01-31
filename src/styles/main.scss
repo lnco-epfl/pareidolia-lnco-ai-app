@@ -265,6 +265,8 @@ button:hover {
 .task-text {
   font-size: calc(var(--font-scale) * 30px);
   line-height: calc(var(--font-scale) * 40px);
+  display: flex;
+  justify-content: space-around;
 }
 
 .right-arrow {

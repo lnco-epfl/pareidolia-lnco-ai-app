@@ -1,5 +1,7 @@
 import universalLanguageDetect from '@unly/universal-language-detector';
 
+import { KeySettings } from '@/modules/config/appSettings';
+
 // eslint-disable-next-line import/no-cycle
 import i18next from './i18n';
 
@@ -78,7 +80,10 @@ export function translateCountable(cntable: 'people' | 'objects'): string {
  * @returns {QuizQuestions} - An array of quiz questions.
  * @throws Will throw an error if the language parameter is not valid.
  */
-export function quizQuestions(question: number): QuizQuestions {
+export function quizQuestions(
+  question: number,
+  keySettings: KeySettings,
+): QuizQuestions {
   return [
     {
       prompt: i18next.t(`quizQuestionPrompt${question === 1 ? 'One' : 'Two'}`),
@@ -86,6 +91,8 @@ export function quizQuestions(question: number): QuizQuestions {
         `quizQuestionOptions${question === 1 ? 'One' : 'Two'}`,
         {
           returnObjects: true,
+          facekey: keySettings.faceKey.toUpperCase(),
+          nofacekey: keySettings.noFaceKey.toUpperCase(),
         },
       ),
       required: true,

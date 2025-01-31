@@ -46,4 +46,9 @@ export type NextStepSettings = {
   linkText: string;
 };
 
+export type KeySettings = {
+  faceKey: string;
+  noFaceKey: string;
+};
+
 export const defaultImageSize = 580;

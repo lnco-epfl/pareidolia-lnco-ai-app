@@ -17,6 +17,7 @@ import i18next from 'i18next';
 import { DataCollection, JsPsych, initJsPsych } from 'jspsych';
 
 import { ExperimentResult } from '@/modules/config/appResults';
+import { KeySettings } from '@/modules/config/appSettings';
 import { AllSettingsType } from '@/modules/context/SettingsContext';
 
 import { groupInstructions, tipScreen } from './instructions';
@@ -189,6 +190,7 @@ const partofexp: (
   usePhotoDiode: 'top-left' | 'top-right' | 'off',
   confidenceQuestion: boolean,
   displayWindow: number,
+  keySettings: KeySettings,
   deviceInfo: {
     device: SerialPort | USBDevice | null;
     sendTriggerFunction: (
@@ -204,6 +206,7 @@ const partofexp: (
   usePhotoDiode: 'top-left' | 'top-right' | 'off',
   confidenceQuestion: boolean,
   displayWindow: number,
+  keySettings: KeySettings,
   deviceInfo: {
     device: SerialPort | USBDevice | null;
     sendTriggerFunction: (
@@ -247,12 +250,12 @@ const partofexp: (
       stimulus() {
         const html = `<div>
           <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/test/pareidolia-test-${jsPsych.evaluateTimelineVariable('num') > 9 ? jsPsych.evaluateTimelineVariable('num') : `0${jsPsych.evaluateTimelineVariable('num')}`}.jpg' alt='task image'/></div>
-          <div class="task-text"><b>A: No Face</b><br /><b>L: Face</b></div>
+          <div class="task-text"><b>${keySettings.noFaceKey.toUpperCase()}: No Face</b><b>${keySettings.faceKey.toUpperCase()}: Face</b></div>
           <div class='photo-diode photo-diode-white ${usePhotoDiode === 'top-left' ? 'top-left' : 'top-right'} ${usePhotoDiode === 'off' ? 'photo-diode-hide' : ''}'/>
         </div>`;
         return html;
       },
-      choices: ['a', 'l'],
+      choices: [keySettings.noFaceKey, keySettings.faceKey],
       on_load: (): void => {
         deviceInfo.sendTriggerFunction(deviceInfo.device, '2');
         document.body.style.cursor = 'none';
@@ -372,6 +375,7 @@ export async function run({
     sequencing,
     language,
     photoDiodeSettings,
+    keySettings,
     nextStepSettings,
   } = input.settings;
   const connectType: 'Serial Port' | 'USB' | null = 'Serial Port';
@@ -470,7 +474,11 @@ export async function run({
 
   if (!sequencing.skipInstructions) {
     timeline.push(
-      groupInstructions(jsPsych, configuration.continueButtonDelay),
+      groupInstructions(
+        jsPsych,
+        configuration.continueButtonDelay,
+        keySettings,
+      ),
       tipScreen(),
     );
   }
@@ -488,6 +496,7 @@ export async function run({
       configuration.usePhotoDiode,
       configuration.addConfidenceQuestion,
       configuration.displayWindow,
+      keySettings,
       deviceInfo,
     ),
   );
@@ -507,6 +516,7 @@ export async function run({
         configuration.usePhotoDiode,
         configuration.addConfidenceQuestion,
         configuration.displayWindow,
+        keySettings,
         deviceInfo,
         () => {
           if (i === duration.numberOfRounds - 1) {
