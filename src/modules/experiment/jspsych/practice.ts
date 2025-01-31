@@ -113,7 +113,7 @@ export const practiceTrials: (
       type: jsPsychHtmlKeyboardResponse,
       stimulus() {
         const html = `<div>
-            <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/practice/pareidolia-practice-${jsPsych.evaluateTimelineVariable('num') > 9 ? jsPsych.evaluateTimelineVariable('num') : `0${jsPsych.evaluateTimelineVariable('num')}`}.jpg' alt='task image'/></div>
+            <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/practice/${jsPsych.evaluateTimelineVariable('num')}-practice.png' alt='task image'/></div>
             <div class="task-text"><b>${keySettings.noFaceKey.toUpperCase()}: No Face</b><b>${keySettings.faceKey.toUpperCase()}: Face</b></div>
             <div class='photo-diode photo-diode-white ${usePhotoDiode === 'top-left' ? 'top-left' : 'top-right'} ${usePhotoDiode === 'off' ? 'photo-diode-hide' : ''}'/>
           </div>`;

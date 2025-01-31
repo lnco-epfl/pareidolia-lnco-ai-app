@@ -26,9 +26,12 @@ export function generatePreloadStrings(): string[] {
   // Use nested loops to construct the file paths
   cntables.forEach((cntable, index) => {
     for (let id: number = 1; id < nrOfImages[index]; id += 1) {
-      pathList.push(
-        `./assets/pareidolia-imgs/${cntable}/pareidolia-${cntable}-${id < 10 ? `0${id}` : id}.jpg`,
-      );
+      pathList.push(`./assets/pareidolia-imgs/${cntable}/${id}-${cntable}.png`);
+      if (cntable === 'test') {
+        pathList.push(
+          `./assets/pareidolia-imgs/${cntable}/${id}-${cntable}-modified.png`,
+        );
+      }
     }
   });
   return pathList;

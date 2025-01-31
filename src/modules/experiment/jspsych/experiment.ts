@@ -71,8 +71,8 @@ const generateTimelineVars = (
 ): ImageDescription[] => {
   const timelineVariables: ImageDescription[] = [];
 
-  // Generate an array of numbers from 1 to 40
-  const numPool = Array.from({ length: 40 }, (_, i) => i + 1);
+  // Generate an array of numbers from 1 to 80
+  const numPool = Array.from({ length: 80 }, (_, i) => i + 1);
 
   // Sample numbers without replacement
   const sampledNums: number[] = jsPsych.randomization.sampleWithoutReplacement(
@@ -249,7 +249,7 @@ const partofexp: (
       type: jsPsychHtmlKeyboardResponse,
       stimulus() {
         const html = `<div>
-          <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/test/pareidolia-test-${jsPsych.evaluateTimelineVariable('num') > 9 ? jsPsych.evaluateTimelineVariable('num') : `0${jsPsych.evaluateTimelineVariable('num')}`}.jpg' alt='task image'/></div>
+          <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/test/${(jsPsych.evaluateTimelineVariable('num') % 40) + 1}-test${jsPsych.evaluateTimelineVariable('num') > 40 ? '-modified' : ''}.png' alt='task image'/></div>
           <div class="task-text"><b>${keySettings.noFaceKey.toUpperCase()}: No Face</b><b>${keySettings.faceKey.toUpperCase()}: Face</b></div>
           <div class='photo-diode photo-diode-white ${usePhotoDiode === 'top-left' ? 'top-left' : 'top-right'} ${usePhotoDiode === 'off' ? 'photo-diode-hide' : ''}'/>
         </div>`;
