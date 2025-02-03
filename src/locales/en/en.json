@@ -33,7 +33,7 @@
   "quizQuestionOptionsOne": [
     "Wait for the image to disappear and complete the form with a question",
     "Type the names of the objects I can identify in the image",
-    "Press the '{{nofacekey}}' key or '{{facekey}}' key to indicate if I see a face in the image"
+    "Press the '{{nofacekey}}' key or '{{facekey}}' key to indicate if I see a face in the image or not"
   ],
   "quizQuestionPromptTwo": "Question 2: Which key should I press to indicate that I see a face in the image?",
   "quizQuestionOptionsTwo": [
