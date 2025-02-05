@@ -274,7 +274,7 @@ button:hover {
   line-height: calc(var(--font-scale) * 40px);
   font-weight: bold;
   color: var(--color);
-  width: 120px;
+  width: calc(var(--font-scale) * 120px);
 }
 
 .task-text button {
@@ -282,8 +282,8 @@ button:hover {
   background-color: var(--background);
   font-size: calc(var(--font-scale) * 30px);
   color: var(--color);
-  width: 100px;
-  height: 50px;
+  width: calc(var(--font-scale) * 100px);
+  height: calc(var(--font-scale) * 50px);
 }
 .custom-overlay {
   position: fixed;
