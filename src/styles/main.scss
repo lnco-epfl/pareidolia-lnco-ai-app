@@ -2,6 +2,11 @@
 //@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 /* Base font sizes for different classes */
+:root {
+  --background: rgb(255 254 254);
+  --color: rgb(20, 20, 20);
+}
+
 [data-font-size='small'] {
   --font-scale: 0.6;
 }
@@ -54,16 +59,16 @@
   margin: 0 auto; /* this is for overflowing content */
   width: 100%;
   height: 100%;
-  background-color: rgb(49, 49, 49);
-  color: rgb(250, 250, 250);
+  background-color: var(--background);
+  color: var(--color);
 }
 
 .jspsych-display-element {
   display: flex;
   margin: auto;
   flex: 1 1 100%;
-  background-color: rgb(49, 49, 49);
-  color: rgb(250, 250, 250);
+  background-color: var(--background);
+  color: var(--color);
   width: 100%;
   flex-direction: column;
   overflow-y: auto;
@@ -159,7 +164,7 @@
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
-  background-color: rgb(180, 180, 180);
+  background-color: rgb(100, 100, 100);
   color: rgb(255, 255, 255);
   box-shadow:
     rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
@@ -169,7 +174,7 @@
 }
 
 .jspsych-btn:hover {
-  background-color: rgb(100, 100, 100);
+  background-color: rgb(50, 50, 50);
 }
 
 .jspsych-btn:disabled {
@@ -245,7 +250,7 @@
 }
 
 .jspsych-survey-likert-opt-label {
-  color: #fff !important;
+  color: var(--color) !important;
 }
 
 img,
@@ -267,38 +272,25 @@ button:hover {
 .task-text {
   font-size: calc(var(--font-scale) * 30px);
   line-height: calc(var(--font-scale) * 40px);
-  color: white;
+  font-weight: bold;
+  color: var(--color);
   width: 120px;
 }
 
 .task-text button {
-  border: 3px white solid;
-  background-color: rgb(49, 49, 49);
+  border: 3px var(--color) solid;
+  background-color: var(--background);
   font-size: calc(var(--font-scale) * 30px);
-  color: white;
+  color: var(--color);
   width: 100px;
   height: 50px;
 }
-
-.right-arrow {
-  fill: white;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-}
-.left-arrow {
-  fill: white;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-}
-
 .custom-overlay {
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: rgb(49, 49, 49);
-  color: rgb(250, 250, 250);
+  background-color: var(--background);
+  color: var(--color);
 }
 
 .resize-page {
@@ -398,8 +390,8 @@ button:hover {
 }
 
 .input-example {
-  background-color: rgb(49, 49, 49);
-  color: rgb(250, 250, 250);
+  background-color: var(--background);
+  color: var(--color);
   font-size: 0.7rem;
   line-height: 0.9rem;
   display: flex;
@@ -434,6 +426,50 @@ button:hover {
   height: 40px;
   font-size: 1rem;
   line-height: 1.2rem;
+}
+
+.group-monitors .input-example {
+  background-color: var(--background);
+  color: var(--color);
+  font-size: 0.5rem;
+  line-height: 0.7rem;
+  display: flex;
+  position: absolute;
+  top: 46%; /* Move the content to 40% of the container height */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -62%); /* Adjust for accurate centering */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.group-monitors .input-example h3 {
+  font-size: 1rem;
+  line-height: 1.2rem;
+  margin: 10px 0;
+}
+
+.group-monitors .input-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.group-monitors .input-content .task-text {
+  width: 70px;
+}
+
+.group-monitors .input-content p {
+  font-size: 0.8rem;
+  line-height: 1rem;
+  margin: 0;
+}
+
+.group-monitors .input-content button {
+  width: 50px;
+  height: 25px;
+  font-size: 0.8rem;
+  line-height: 1rem;
 }
 
 /* Instruction page 4 - 3 monitors in a row */
