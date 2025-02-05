@@ -90,7 +90,6 @@ export const practiceTrials: (
         500 + jsPsych.evaluateTimelineVariable('blackscreenJitter'),
       on_start: (): void => {
         deviceInfo.sendTriggerFunction(deviceInfo.device, '0');
-        document.body.style.cursor = 'none';
       },
     },
     // Crosshair shown before each image for 500ms.
@@ -105,24 +104,33 @@ export const practiceTrials: (
       trial_duration: 500,
       on_start: (): void => {
         deviceInfo.sendTriggerFunction(deviceInfo.device, '1');
-        document.body.style.cursor = 'none';
       },
     },
     // Image is shown for 250ms
     {
       type: jsPsychHtmlKeyboardResponse,
       stimulus() {
-        const html = `<div>
-            <div class="task-img"><img class="task-img" id="task-img" src='./assets/pareidolia-imgs/practice/${jsPsych.evaluateTimelineVariable('num')}-practice.png' alt='task image'/></div>
-            <div class="task-text"><b>${keySettings.noFaceKey.toUpperCase()}: No Face</b><b>${keySettings.faceKey.toUpperCase()}: Face</b></div>
+        const html = `
+        <div>
+            <h3 style="margin:0px;">Do you see a face?</h3>
+            <div class="task-middle">
+              <div class="task-text task-text-left">
+                <p>Press ${keySettings.noFaceKey.toUpperCase()} for:</p><button>No</button>
+              </div>  
+              <div class="task-img">
+                <img class="task-img" id="task-img" src='./assets/pareidolia-imgs/practice/${jsPsych.evaluateTimelineVariable('num')}-practice.png' alt='task image'/>
+              </div>
+              <div class="task-text task-text-right">
+                <p>Press ${keySettings.faceKey.toUpperCase()} for:</p><button>Yes</button>
+              </div>
+            </div>
             <div class='photo-diode photo-diode-white ${usePhotoDiode === 'top-left' ? 'top-left' : 'top-right'} ${usePhotoDiode === 'off' ? 'photo-diode-hide' : ''}'/>
-          </div>`;
+        </div>`;
         return html;
       },
       choices: [keySettings.noFaceKey, keySettings.faceKey],
       on_load: (): void => {
         deviceInfo.sendTriggerFunction(deviceInfo.device, '2');
-        document.body.style.cursor = 'none';
         const image = document.getElementById('task-img');
         setTimeout(() => {
           if (image) {
@@ -140,10 +148,6 @@ export const practiceTrials: (
       trial_duration: 500,
       on_start: (): void => {
         deviceInfo.sendTriggerFunction(deviceInfo.device, '3');
-        document.body.style.cursor = 'none';
-      },
-      on_finish: (): void => {
-        document.body.style.cursor = 'auto';
       },
     },
     {

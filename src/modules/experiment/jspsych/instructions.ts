@@ -27,7 +27,17 @@ function generateInstructionPages(keySettings: KeySettings): string[] {
     <img class="inst-screen" src="./assets/instruction-media/screen.jpg" alt='task image'>`,
     `
     <img class="inst-monitor" src="./assets/instruction-media/monitor-crosshair.png" alt="computer monitor pictogram">
-    <img class="inst-keys" src="./assets/instruction-media/key-presses.jpg" alt='task image'>`,
+    <div class="inst-screen input-example">
+      <h3>Did you see a face?</h3>
+      <div class="input-content">
+        <div class="task-text task-text-left">
+          <p>Press ${keySettings.noFaceKey.toUpperCase()} for:</p><button>No</button>
+        </div>  
+        <div class="task-text task-text-right">
+          <p>Press ${keySettings.faceKey.toUpperCase()} for:</p><button>Yes</button>
+        </div>
+      </div>
+    </div>`,
   ];
 
   const pages: string[] = [];
