@@ -111,7 +111,7 @@ export const practiceTrials: (
       type: jsPsychHtmlKeyboardResponse,
       stimulus() {
         const html = `
-        <div>
+        <div class="task-outer">
             <h3 style="margin:0px;">Do you see a face?</h3>
             <div class="task-middle">
               <div class="task-text task-text-left">
