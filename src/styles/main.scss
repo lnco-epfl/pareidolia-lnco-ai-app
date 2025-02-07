@@ -267,6 +267,11 @@ button:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
+}
+
+.task-img img {
+  border: #000 solid 3px;
 }
 
 .task-text {

@@ -23,19 +23,19 @@
   "instructionTexts": [
     "<b>Step 1:</b><br>A white cross is displayed in the middle of the screen.<br> Look at it and keep focus.",
     "<b>Step 2:</b><br>Shortly afterwards, an image will be displayed. You will be asked to indicate if you can see a face in the image or not.",
-    "<b>Step 3:</b><br>While the image is being displayed, press the <i>{{nofacekey}}</i> to indicate that <i>no face</i> is present in the image,<br/> or press the <i>{{facekey}}</i> to indicate that a <i>face</i> is present.",
+    "<b>Step 3:</b><br>While the image is being displayed, press the <i>{{nofacekey}}</i> key to indicate that <i>no face</i> is present in the image,<br/> or press the <i>{{facekey}}</i> key to indicate that a <i>face</i> is present.",
     "<b>These three steps will be repeated several times throughout the experiment.</b>",
     "<b>REMINDER</b> press the <i>{{nofacekey}}</i> key to indicate that <i>no face</i> is present in the image, or press the <i>{{facekey}}</i> key to indicate that a <b>face</b> is present."
   ],
   "instructionScreenExample": "Did you see a face in the image",
   "quizPreamble": "Test your knowledge before you begin!",
-  "quizQuestionPromptOne": "Question 1: What should I do when I see the image?",
+  "quizQuestionPromptOne": "<b>Question 1: What should I do when I see the image?</b>",
   "quizQuestionOptionsOne": [
     "Wait for the image to disappear and complete the form with a question",
     "Type the names of the objects I can identify in the image",
     "Press the '{{nofacekey}}' key or '{{facekey}}' key to indicate if I see a face in the image or not"
   ],
-  "quizQuestionPromptTwo": "Question 2: Which key should I press to indicate that I see a face in the image?",
+  "quizQuestionPromptTwo": "<b>Question 2: Which key should I press to indicate that I see a face in the image?</b>",
   "quizQuestionOptionsTwo": [
     "No keys, after the image disappears a form will be displayed",
     "{{nofacekey}}",
